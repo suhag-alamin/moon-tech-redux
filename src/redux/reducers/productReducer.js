@@ -1,10 +1,12 @@
 import {
   ADD_PRODUCT,
   ADD_TO_CART,
+  EDIT_PRODUCT,
   LOAD_PRODUCT,
   PRODUCT_LOADED,
   REMOVE_FROM_CART,
   REMOVE_PRODUCT,
+  SEARCH_PRODUCT,
 } from "../actionTypes/actionTypes";
 
 const initialState = {
@@ -36,6 +38,28 @@ const productReducer = (state = initialState, action) => {
           (product) => product._id !== action.payload
         ),
       };
+    case EDIT_PRODUCT:
+      return {
+        ...state,
+        products: [
+          ...state.products.filter(
+            (product) => product._id !== action.payload._id
+          ),
+          action.payload,
+        ],
+      };
+    case SEARCH_PRODUCT:
+      return {
+        ...state,
+        products: [
+          ...state.products.filter((product) =>
+            product?.model
+              ?.toLowerCase()
+              .includes(action?.payload?.toLowerCase())
+          ),
+        ],
+      };
+
     case ADD_TO_CART:
       if (selectedProduct) {
         const newCart = state.cart.filter(

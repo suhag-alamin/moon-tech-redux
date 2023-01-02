@@ -1,10 +1,28 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
-import addProductData from "../../redux/thunk/products/addProductData";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import editProductData from "../../redux/thunk/products/editProductData";
 
-const AddProduct = () => {
-  const { register, handleSubmit } = useForm();
+const EditProduct = () => {
+  const { id } = useParams();
+  const product = useSelector((state) =>
+    state.products.products.find((product) => product._id === id)
+  );
+
+  const { register, handleSubmit } = useForm({
+    defaultValues: {
+      model: product?.model,
+      brand: product?.brand,
+      status: product?.status,
+      price: product?.price,
+      keyFeature1: product?.keyFeature[0],
+      keyFeature2: product?.keyFeature[1],
+      keyFeature3: product?.keyFeature[2],
+      keyFeature4: product?.keyFeature[3],
+      image: product?.image,
+    },
+  });
   const dispatch = useDispatch();
 
   const submit = (data) => {
@@ -23,7 +41,7 @@ const AddProduct = () => {
     };
 
     console.log(product);
-    dispatch(addProductData(product));
+    dispatch(editProductData(id, product));
   };
 
   return (
@@ -148,4 +166,4 @@ const AddProduct = () => {
   );
 };
 
-export default AddProduct;
+export default EditProduct;

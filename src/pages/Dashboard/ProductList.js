@@ -1,11 +1,18 @@
 import React, { useEffect } from "react";
+import { FaPen } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import deleteProduct from "../../redux/thunk/products/deleteProduct";
 import loadProductData from "../../redux/thunk/products/fetchProducts";
 
 const ProductList = () => {
   const products = useSelector((state) => state.products.products);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleClick = (id) => {
+    navigate(`/dashboard/edit-product/${id}`);
+  };
 
   useEffect(() => {
     dispatch(loadProductData());
@@ -69,6 +76,9 @@ const ProductList = () => {
                   </td>
                   <td class="p-2">
                     <div class="flex justify-center">
+                      <button onClick={() => handleClick(_id)}>
+                        <FaPen className="hover:text-blue-600  hover:bg-gray-100" />
+                      </button>
                       <button onClick={() => dispatch(deleteProduct(_id))}>
                         <svg
                           class="w-8 h-8 hover:text-blue-600 rounded-full hover:bg-gray-100 p-1"

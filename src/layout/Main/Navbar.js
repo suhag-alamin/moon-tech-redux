@@ -1,46 +1,58 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import { BsFillCartFill } from "react-icons/bs";
 import { IoIosListBox } from "react-icons/io";
 import { BiSearchAlt } from "react-icons/bi";
+import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { searchProduct } from "../../redux/actions/productAction";
 
 const Navbar = () => {
+  const [search, setSearch] = useState("");
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (search.length >= 3) {
+      dispatch(searchProduct(search));
+    }
+  }, [search]);
+
   return (
-    <nav className='h-14 bg-indigo-200 rounded-full m-2 max-w-7xl mx-auto px-5'>
-      <ul className='h-full  mx-auto flex justify-between items-center gap-3 font-semibold text-indigo-900'>
+    <nav className="h-14 bg-indigo-200 rounded-full m-2 max-w-7xl mx-auto px-5">
+      <ul className="h-full  mx-auto flex justify-between items-center gap-3 font-semibold text-indigo-900">
         <h1>Moon Tech</h1>
 
-        <li className='flex bg-white mx-auto h-8 w-full max-w-lg  rounded-full pr-3'>
+        <li className="flex bg-white mx-auto h-8 w-full max-w-lg  rounded-full pr-3">
           <input
-            className='h-8 rounded-full w-full text-sm border-0 focus:ring-0 outline-none'
-            type='text'
-            name='search'
-            id='search'
+            className="h-8 rounded-full w-full text-sm border-0 focus:ring-0 outline-none"
+            type="text"
+            name="search"
+            id="search"
+            onChange={(e) => setSearch(e.target.value)}
           />
           <button>
             <BiSearchAlt />
           </button>
         </li>
         <li>
-          <Link to='/'>Home</Link>
+          <Link to="/">Home</Link>
         </li>
         <li>
-          <Link to='/top-rated'>Top Rated</Link>
+          <Link to="/top-rated">Top Rated</Link>
         </li>
         <li>
-          <Link to='/about'>About</Link>
+          <Link to="/about">About</Link>
         </li>
         <li>
-          <Link to='/dashboard'>Dashboard</Link>
+          <Link to="/dashboard">Dashboard</Link>
         </li>
-        <Link to='/'>
-          <li title='Wishlist' className='bg-indigo-500 p-2 rounded-full'>
-            <IoIosListBox className='text-white' />
+        <Link to="/">
+          <li title="Wishlist" className="bg-indigo-500 p-2 rounded-full">
+            <IoIosListBox className="text-white" />
           </li>
         </Link>
-        <Link to='/cart'>
-          <li title='cart' className='bg-indigo-500 p-2 rounded-full'>
-            <BsFillCartFill className='text-white ' />
+        <Link to="/cart">
+          <li title="cart" className="bg-indigo-500 p-2 rounded-full">
+            <BsFillCartFill className="text-white " />
           </li>
         </Link>
       </ul>

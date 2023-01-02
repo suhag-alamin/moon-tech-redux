@@ -1,10 +1,12 @@
 import {
   ADD_PRODUCT,
   ADD_TO_CART,
+  EDIT_PRODUCT,
   LOAD_PRODUCT,
   PRODUCT_LOADED,
   REMOVE_FROM_CART,
   REMOVE_PRODUCT,
+  SEARCH_PRODUCT,
 } from "../actionTypes/actionTypes";
 
 export const loadProduct = (data) => {
@@ -21,6 +23,13 @@ export const addProduct = (data) => {
   };
 };
 
+export const editProduct = (data) => {
+  return {
+    type: EDIT_PRODUCT,
+    payload: data,
+  };
+};
+
 export const removeProduct = (id) => {
   return {
     type: REMOVE_PRODUCT,
@@ -32,6 +41,13 @@ export const addToCart = (product) => {
   return {
     type: ADD_TO_CART,
     payload: product,
+  };
+};
+
+export const searchProduct = (query) => {
+  return {
+    type: SEARCH_PRODUCT,
+    payload: query,
   };
 };
 
